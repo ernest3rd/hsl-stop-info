@@ -1,5 +1,9 @@
 import React from "react";
+import { BrowserRouter as Router} from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
+import Header from "../Header";
+import Main from "../Main";
+import Footer from "../Footer";
 import "./App.css";
 
 const Title = styled.h1`
@@ -25,7 +29,11 @@ const theme = {
 
 const App = () => (
   <ThemeProvider theme={theme}>
-    <Title> Hello, World! </Title>
+    <Router>
+      <Header />
+      <Main />
+      <Footer />
+    </Router>
   </ThemeProvider>
 );
 
