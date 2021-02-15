@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import Home from "../../../Pages/Home";
 
 const Main = () => (
   <Switch>
@@ -10,7 +11,7 @@ const Main = () => (
       <h1>Users</h1>
     </Route>
     <Route path="/">
-      <h1>Home</h1>
+      <Home />
     </Route>
   </Switch>
 );
