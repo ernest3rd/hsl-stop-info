@@ -31,6 +31,7 @@ const Home = () => {
   return (
     <>
       <SearchInput
+        ref={(input) => input && input.focus()}
         placeholder={t('common:home.searchPlaceholder')}
         value={searchText}
         onChange={({ target }) => {

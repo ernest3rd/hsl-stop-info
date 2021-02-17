@@ -8,7 +8,7 @@ const Container = styled.main(() => ({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: spacing(4, 0),
+  padding: spacing(2, 0),
 }));
 
 const Header = () => {
