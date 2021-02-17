@@ -1,23 +1,13 @@
-import axios from 'axios';
 import React, { useCallback, useRef, useState } from 'react';
 import useTranslation from 'hooks/useTranslation';
 import { SearchInput } from 'components/UI/Input';
+import useAddressSearch from '../hooks/useAddressSearch';
 
 const Home = () => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState('');
-  const [searchResults, setSearchResults] = useState();
+  const { search, results } = useAddressSearch();
   const searchDelayTimer = useRef(null);
-
-  // Make a search query with the current search text
-  const doSearch = useCallback(() => {
-    axios
-      .get('http://api.digitransit.fi/geocoding/v1/search', {
-        params: { text: searchText },
-      })
-      .then(({ data: { features } = {} }) => setSearchResults(features))
-      .catch((error) => console.error(error));
-  }, [searchText]);
 
   // Restart search delay timer
   const restartSearchTimer = () => {
@@ -25,17 +15,17 @@ const Home = () => {
     if (current !== null) {
       clearTimeout(current);
     }
-    searchDelayTimer.current = setTimeout(doSearch, 500);
+    searchDelayTimer.current = setTimeout(() => search(searchText), 400);
   };
 
   // Handle enter key press
   const handleKeyDown = useCallback(
     (event) => {
       if (event.key === 'Enter') {
-        console.log(searchResults && searchResults[0]);
+        console.log(results && results[0]);
       }
     },
-    [searchResults]
+    [results]
   );
 
   return (
@@ -49,9 +39,9 @@ const Home = () => {
         onKeyUp={restartSearchTimer}
         onKeyDown={handleKeyDown}
       />
-      {searchResults && (
+      {results && (
         <ul>
-          {searchResults.map(({ properties }) => (
+          {results.map(({ properties }) => (
             <li key={properties.gid}>{properties.label}</li>
           ))}
         </ul>
