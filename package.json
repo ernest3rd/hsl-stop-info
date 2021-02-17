@@ -9,6 +9,10 @@
   },
   "author": "Juhani Halkomäki <juhani.halkomaki@gmail.com>",
   "license": "ISC",
+  "prettier": {
+    "semi": true,
+    "singleQuote": true
+  },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
     "@babel/core": "^7.12.16",
@@ -26,9 +30,12 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "babel-plugin-module-resolver": "^4.1.0",
     "editorconfig": "^0.15.3",
+    "i18next": "^19.8.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-i18next": "^11.8.7",
     "react-router-dom": "^5.2.0",
     "styled-components": "^5.2.1"
   }

@@ -1,16 +1,18 @@
-import axios from "axios";
-import React, { useCallback, useRef, useState } from "react";
-import { SearchInput } from "../../Components/UI/Input";
+import axios from 'axios';
+import React, { useCallback, useRef, useState } from 'react';
+import useTranslation from 'hooks/useTranslation';
+import { SearchInput } from 'components/UI/Input';
 
 const Home = () => {
-  const [searchText, setSearchText] = useState("");
+  const { t } = useTranslation();
+  const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState();
   const searchDelayTimer = useRef(null);
 
   // Make a search query with the current search text
   const doSearch = useCallback(() => {
     axios
-      .get("http://api.digitransit.fi/geocoding/v1/search", {
+      .get('http://api.digitransit.fi/geocoding/v1/search', {
         params: { text: searchText },
       })
       .then(({ data: { features } = {} }) => setSearchResults(features))
@@ -29,7 +31,7 @@ const Home = () => {
   // Handle enter key press
   const handleKeyDown = useCallback(
     (event) => {
-      if (event.key === "Enter") {
+      if (event.key === 'Enter') {
         console.log(searchResults && searchResults[0]);
       }
     },
@@ -39,7 +41,7 @@ const Home = () => {
   return (
     <>
       <SearchInput
-        placeholder="Type here to search..."
+        placeholder={t('common:home.searchPlaceholder')}
         value={searchText}
         onChange={({ target }) => {
           setSearchText(target.value);

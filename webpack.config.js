@@ -18,7 +18,10 @@ module.exports = {
       },
     ],
   },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
+  resolve: {
+    extensions: ["*", ".js", ".jsx"],
+    modules: ["node_modules", "src"],
+  },
   output: {
     path: path.resolve(__dirname, "dist/"),
     publicPath: "/dist/",
@@ -30,5 +33,4 @@ module.exports = {
     publicPath: "http://localhost:3000/dist/",
     watchContentBase: true,
   },
-  //plugins: [new webpack.HotModuleReplacementPlugin()],
 };

@@ -1,9 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import Header from "../Layout/Header";
-import Main from "../Layout/Main";
-import Footer from "../Layout/Footer";
+import TranslationProvider from "providers/TranslationProvider";
+import Header from "components/layout/Header";
+import Main from "components/layout/Main";
+import Footer from "components/layout/Footer";
 import "./App.css";
 
 const theme = {
@@ -36,11 +37,13 @@ const theme = {
 
 const App = () => (
   <ThemeProvider theme={theme}>
-    <Router>
-      <Header />
-      <Main />
-      <Footer />
-    </Router>
+    <TranslationProvider ns={["common"]}>
+      <Router>
+        <Header />
+        <Main />
+        <Footer />
+      </Router>
+    </TranslationProvider>
   </ThemeProvider>
 );
 
