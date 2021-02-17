@@ -14,3 +14,21 @@ body {
   min-height: 100%;
   flex-direction: column;
 }
+
+.backgroundColorized {
+  animation-name: backgroundColorRotation;
+  animation-duration: 120s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes backgroundColorRotation {
+  0% {
+    background-color: hsl(0deg, 50%, 89%);
+  }
+  50% {
+    background-color: hsl(180deg, 50%, 89%);
+  }
+  100% {
+    background-color: hsl(360deg, 50%, 89%);
+  }
+}

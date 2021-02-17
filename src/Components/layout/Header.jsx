@@ -3,18 +3,24 @@ import useTranslation from 'hooks/useTranslation';
 import styled from 'styled-components';
 import { spacing } from '../../helpers/styles';
 
-const Container = styled.main(() => ({
+const Container = styled.header(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: spacing(2, 0),
+  padding: spacing(4, 0),
+  '>h1': {
+    lineHeight: '1em',
+    padding: 0,
+    margin: 0,
+  },
 }));
 
 const Header = () => {
   const { t } = useTranslation();
+
   return (
-    <Container>
+    <Container className="backgroundColorized">
       <h1>{t('common:app.name')}</h1>
     </Container>
   );

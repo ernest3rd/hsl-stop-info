@@ -1,19 +1,22 @@
 import React from 'react';
 import useTranslation from 'hooks/useTranslation';
 import styled from 'styled-components';
+import { spacing } from '../../helpers/styles';
 
 const Container = styled.footer(() => ({
   width: '100%',
-  height: '3em',
+  height: '1em',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  padding: spacing(6, 0),
 }));
 
 const Footer = () => {
   const { t } = useTranslation();
+
   return (
-    <Container>
+    <Container className="backgroundColorized">
       <p>{t('common:app.byWho')}</p>
     </Container>
   );
