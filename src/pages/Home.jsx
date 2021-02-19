@@ -2,7 +2,10 @@ import React, { useCallback, useRef, useState } from 'react';
 import useTranslation from 'hooks/useTranslation';
 import { SearchInput } from 'components/UI/Input';
 import useAddressSearch from '../hooks/useAddressSearch';
-import { Link } from 'react-router-dom';
+import { ListItem } from '../components/UI/Box';
+import { List } from '../components/UI/List';
+import { Paragraph } from '../components/UI/Text';
+import { toUrlParams } from '../helpers/url';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -42,17 +45,29 @@ const Home = () => {
         onKeyDown={handleKeyDown}
       />
       {results && (
-        <ul>
+        <List>
           {results.map(
-            ({ properties, geometry: { coordinates = [0, 0] } = {} }) => (
-              <li key={properties.gid}>
-                <Link to={`/address/${coordinates[0]}/${coordinates[1]}`}>
-                  {properties.label}
-                </Link>
-              </li>
-            )
+            ({ properties, geometry: { coordinates = [0, 0] } = {} }) => {
+              const urlParams = toUrlParams({
+                lng: coordinates[0],
+                lat: coordinates[1],
+              });
+              return (
+                <ListItem
+                  key={properties.gid}
+                  fullWidth={true}
+                  linkTo={`/address/${urlParams}`}
+                >
+                  {properties.label.split(',').map((part, i) => (
+                    <Paragraph key={i} margin={0} padding={0}>
+                      {part}
+                    </Paragraph>
+                  ))}
+                </ListItem>
+              );
+            }
           )}
-        </ul>
+        </List>
       )}
     </>
   );

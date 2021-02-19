@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PageTitle = styled.h1(({ theme }) => ({
   fontFamily: theme.font.family.heading,
@@ -17,6 +17,11 @@ export const H1 = styled.h1(({ theme }) => ({
 export const H2 = styled.h2(({ theme }) => ({
   fontFamily: theme.font.family.heading,
   fontSize: theme.fontSizes.h2,
-  fontWegiht: theme.fontWeights.bold,
+  fontWeight: theme.fontWeights.bold,
   color: theme.colors.body,
+}));
+
+export const Paragraph = styled.p(({ padding, margin }) => ({
+  margin,
+  padding,
 }));
