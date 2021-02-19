@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import useTranslation from 'hooks/useTranslation';
 import { SearchInput } from 'components/UI/Input';
 import useAddressSearch from '../hooks/useAddressSearch';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -32,7 +33,7 @@ const Home = () => {
     <>
       <SearchInput
         ref={(input) => input && input.focus()}
-        placeholder={t('common:home.searchPlaceholder')}
+        placeholder={t('default:home.searchPlaceholder')}
         value={searchText}
         onChange={({ target }) => {
           setSearchText(target.value);
@@ -42,9 +43,15 @@ const Home = () => {
       />
       {results && (
         <ul>
-          {results.map(({ properties }) => (
-            <li key={properties.gid}>{properties.label}</li>
-          ))}
+          {results.map(
+            ({ properties, geometry: { coordinates = [0, 0] } = {} }) => (
+              <li key={properties.gid}>
+                <Link to={`/address/${coordinates[0]}/${coordinates[1]}`}>
+                  {properties.label}
+                </Link>
+              </li>
+            )
+          )}
         </ul>
       )}
     </>

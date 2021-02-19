@@ -17,7 +17,7 @@ const Footer = () => {
 
   return (
     <Container className="backgroundColorized">
-      <p>{t('common:app.byWho')}</p>
+      <p>{t('default:app.byWho')}</p>
     </Container>
   );
 };

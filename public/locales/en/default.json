@@ -1,0 +1,9 @@
+{
+  "app": {
+    "name": "HSL Nearby Stops",
+    "byWho": "by Juhani Halkomäki"
+  },
+  "home": {
+    "searchPlaceholder": "Type an address..."
+  }
+}

@@ -21,7 +21,7 @@ const Header = () => {
 
   return (
     <Container className="backgroundColorized">
-      <h1>{t('common:app.name')}</h1>
+      <h1>{t('default:app.name')}</h1>
     </Container>
   );
 };

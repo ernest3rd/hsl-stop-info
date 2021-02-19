@@ -9,15 +9,17 @@ import theme from 'theme';
 import './App.css';
 
 const App = () => (
-  <ThemeProvider theme={theme}>
-    <TranslationProvider ns={['common']}>
-      <Router>
-        <Header />
-        <Main />
-        <Footer />
-      </Router>
-    </TranslationProvider>
-  </ThemeProvider>
+  <React.Suspense fallback={null}>
+    <ThemeProvider theme={theme}>
+      <TranslationProvider ns={['default']}>
+        <Router>
+          <Header />
+          <Main />
+          <Footer />
+        </Router>
+      </TranslationProvider>
+    </ThemeProvider>
+  </React.Suspense>
 );
 
 export default App;
