@@ -16,8 +16,8 @@ export const H1 = styled.h1(({ theme }) => ({
 
 export const H2 = styled.h2(({ theme }) => ({
   fontFamily: theme.font.family.heading,
-  fontSize: theme.fontSizes.h2,
-  fontWeight: theme.fontWeights.bold,
+  fontSize: theme.font.size.h2,
+  fontWeight: theme.font.weight.bold,
   color: theme.colors.body,
 }));
 

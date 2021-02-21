@@ -47,18 +47,22 @@ const Home = () => {
       {results && (
         <List>
           {results.map(
-            ({ properties, geometry: { coordinates = [0, 0] } = {} }) => {
+            ({
+              properties: { label, gid } = {},
+              geometry: { coordinates = [0, 0] } = {},
+            }) => {
               const urlParams = toUrlParams({
+                label,
                 lng: coordinates[0],
                 lat: coordinates[1],
               });
               return (
                 <ListItem
-                  key={properties.gid}
+                  key={gid}
                   fullWidth={true}
                   linkTo={`/address/${urlParams}`}
                 >
-                  {properties.label.split(',').map((part, i) => (
+                  {label.split(',').map((part, i) => (
                     <Paragraph key={i} margin={0} padding={0}>
                       {part}
                     </Paragraph>
