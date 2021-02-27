@@ -1,5 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import { useMemo } from 'react';
+import { deduplicateByKey } from '../helpers/array';
 
 const GET_STOPS_BY_RADIUS = gql`
   query GetStopsByRadius($lat: Float!, $lng: Float!, $radius: Int!) {
@@ -31,9 +32,9 @@ const useGetStopsByRadius = ({ lat = 0, lng = 0, radius = 100 }) => {
   const stops = useMemo(() => {
     if(data) {  
       const { stopsByRadius: { edges = [] } = {} } = data;
-      return edges.map(({node}) => {
+      return deduplicateByKey(edges.map(({node}) => {
         return node.stop;
-      });
+      }), 'gtfsId');
     }
     else {
       return [];

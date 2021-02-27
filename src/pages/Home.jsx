@@ -1,11 +1,18 @@
 import React, { useCallback, useRef, useState } from 'react';
+import styled from 'styled-components';
 import useTranslation from 'hooks/useTranslation';
 import { SearchInput } from 'components/UI/Input';
-import useAddressSearch from '../hooks/useAddressSearch';
-import { ListItem } from '../components/UI/Box';
-import { List } from '../components/UI/List';
-import { Paragraph } from '../components/UI/Text';
-import { toUrlParams } from '../helpers/url';
+import useAddressSearch from 'hooks/useAddressSearch';
+import { ListItem } from 'components/UI/Box';
+import { List } from 'components/UI/List';
+import { Paragraph } from 'components/UI/Text';
+import { toUrlParams } from 'helpers/url';
+import { spacing } from 'helpers/styles';
+
+const Container = styled.div(() => ({
+  padding: spacing(4),
+  maxWidth: 500,
+}))
 
 const Home = () => {
   const { t } = useTranslation();
@@ -33,7 +40,7 @@ const Home = () => {
   );
 
   return (
-    <>
+    <Container>
       <SearchInput
         ref={(input) => input && input.focus()}
         placeholder={t('default:home.searchPlaceholder')}
@@ -75,7 +82,7 @@ const Home = () => {
           )}
         </List>
       )}
-    </>
+    </Container>
   );
 };
 
