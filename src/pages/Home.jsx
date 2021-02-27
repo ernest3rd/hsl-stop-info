@@ -62,11 +62,13 @@ const Home = () => {
                   fullWidth={true}
                   linkTo={`/address/${urlParams}`}
                 >
+                  <>
                   {label.split(',').map((part, i) => (
                     <Paragraph key={i} margin={0} padding={0}>
                       {part}
                     </Paragraph>
                   ))}
+                  </>
                 </ListItem>
               );
             }
