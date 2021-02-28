@@ -51,13 +51,12 @@ const LongName = styled.span({
   marginLeft: '0.25rem',
 })
 
-const StopInfo = ({ open, stopId, onClose }) => {
+const StopInfo = ({ open, stopId }) => {
   const { t } = useTranslation();
   const { stopInfo, loading, error } = useGetStopInfo({
     id: stopId,
   });
 
-  console.log({ stopInfo });
   const { name, code, routes = [], stoptimesWithoutPatterns = [] } =
     stopInfo || {};
 

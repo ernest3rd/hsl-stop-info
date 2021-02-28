@@ -33,7 +33,7 @@ const Home = () => {
   const handleKeyDown = useCallback(
     (event) => {
       if (event.key === 'Enter') {
-        console.log(results && results[0]);
+        // @TODO use the first search result
       }
     },
     [results]

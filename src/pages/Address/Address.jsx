@@ -50,13 +50,13 @@ const Address = () => {
     coords: [center.lat, center.lng],
   });
   const { id: stopId } = selectedStop;
-  const { stops, loading, error } = useGetStopsByRadius({
+  // @TODO Show a loading animation
+  // @TODO Handle errors
+  const { stops /*, loading, error*/ } = useGetStopsByRadius({
     lat: center.lat,
     lng: center.lng,
     radius: RADIUS,
   });
-
-  console.log({ loading, error, stops });
 
   useEffect(() => {
     if (mapRef.current) {
