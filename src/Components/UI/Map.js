@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import styled from 'styled-components';
@@ -46,4 +46,4 @@ Map.propTypes = {
   zoom: PropTypes.number,
 };
 
-export default Map;
+export default memo(Map);
