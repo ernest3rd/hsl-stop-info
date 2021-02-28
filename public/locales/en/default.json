@@ -6,6 +6,12 @@
   "home": {
     "searchPlaceholder": "Type an address..."
   },
+  "address": {
+    "stopInfo": {
+      "routes": "Routes",
+      "arrivingSoon": "Arriving soon"
+    }
+  },
   "events": {
     "loading": "Loading..."
   }
