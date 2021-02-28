@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+
+import useGetStopInfo from 'hooks/useGetStopInfo';
 import { Padding } from 'components/UI/Spacing';
 import { H2 } from 'components/UI/Text';
-import { useTranslation } from 'react-i18next';
-import useGetStopInfo from '../../hooks/useGetStopInfo';
 
 const Container = styled.div(({ open }) => ({
   overflow: 'hidden',

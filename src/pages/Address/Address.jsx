@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { KeyboardArrowLeft } from '@styled-icons/material-rounded/KeyboardArrowLeft';
-import { icon } from 'leaflet';
-import { Marker, Popup } from 'react-leaflet';
+import { MapConsumer } from 'react-leaflet';
 
 import useGetStopsByRadius from 'hooks/useGetStopsByRadius';
-import useTranslation from 'hooks/useTranslation';
 import useQueryParams from 'hooks/useQueryParams';
 
-import { getPinShadow, getStopPinIcon } from 'helpers/assets';
 import { H2 } from 'components/UI/Text';
 import Map from 'components/UI/Map';
 import StopInfo from './StopInfo';
+import StopMarkers from './StopMarkers';
 
 const Container = styled.div(({ full }) => ({
   flex: full ? 1 : 0,
@@ -40,18 +38,47 @@ const GoBackLink = styled(Link)(() => ({
 const RADIUS = 1000;
 
 const Address = () => {
-  const { t } = useTranslation();
-  const [selectedStop, setSelectedStop] = useState();
+  const mapRef = useRef();
   const query = useQueryParams();
-  const latitude = parseFloat(query.get('lat'));
-  const longitude = parseFloat(query.get('lng'));
+  const [center] = useState({
+    lat: parseFloat(query.get('lat')),
+    lng: parseFloat(query.get('lng')),
+  });
+  const [selectedStop, setSelectedStop] = useState({
+    coords: [center.lat, center.lng],
+  });
+  const { id: stopId } = selectedStop;
   const { stops, loading, error } = useGetStopsByRadius({
-    lat: latitude,
-    lng: longitude,
+    lat: center.lat,
+    lng: center.lng,
     radius: RADIUS,
   });
 
   console.log({ loading, error, stops });
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.panTo(selectedStop.coords, {
+        animate: true,
+        duration: 0.4,
+      });
+    }
+    const timeout = setTimeout(() => {
+      if (mapRef.current) {
+        mapRef.current.invalidateSize({ animate: true });
+      }
+    }, 400);
+    return () => clearTimeout(timeout);
+  }, [selectedStop]);
+
+  const onStopSelect = useCallback(({ id, lat, lng }) =>
+    setSelectedStop({ id, coords: [lat, lng] })
+  );
+  const onStopDeselect = useCallback(({ id }) =>
+    setSelectedStop((current) =>
+      current.id === id ? { ...current, id: null } : current
+    )
+  );
 
   return (
     <Container full>
@@ -62,37 +89,26 @@ const Address = () => {
         <H2>{query.get('label')}</H2>
       </Row>
       <Row full>
-        <Map lat={latitude} lng={longitude} zoom={16}>
-          {stops.map(({ gtfsId, code, name, lat, lon, vehicleMode }) => (
-            <Marker
-              key={gtfsId}
-              position={[lat, lon]}
-              icon={
-                new icon({
-                  iconUrl: getStopPinIcon(vehicleMode),
-                  shadowUrl: getPinShadow(),
-                })
-              }
-              eventHandlers={{
-                click: () => {
-                  setSelectedStop(gtfsId);
-                },
-              }}
-            >
-              <Popup
-                onClose={() =>
-                  setSelectedStop((current) =>
-                    gtfsId === current ? null : current
-                  )
-                }
-              >
-                <h3>{code}</h3>
-                <span>{name}</span>
-              </Popup>
-            </Marker>
-          ))}
+        <StopInfo
+          stopId={stopId}
+          open={!!stopId}
+          onClose={() => onStopDeselect({ id: stopId })}
+        />
+        <Map lat={center.lat} lng={center.lng} zoom={16}>
+          <MapConsumer>
+            {(map) => {
+              useEffect(() => {
+                mapRef.current = map;
+              }, []);
+              return null;
+            }}
+          </MapConsumer>
+          <StopMarkers
+            stops={stops}
+            onMarkerSelect={onStopSelect}
+            onMarkerDeselect={onStopDeselect}
+          />
         </Map>
-        <StopInfo stopId={selectedStop} open={!!selectedStop} onClose={() => setSelectedStop(null)} />
       </Row>
     </Container>
   );
