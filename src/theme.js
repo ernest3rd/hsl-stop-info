@@ -5,7 +5,9 @@ const theme = {
     secondary: '#8888ff',
     black: '#000000',
     white: '#ffffff',
+    lightGrey: '#DDDDDD',
     grey: '#888888',
+    darkGrey: '#333333',
   },
   font: {
     size: {
