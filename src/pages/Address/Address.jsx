@@ -2,15 +2,17 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { KeyboardArrowLeft } from '@styled-icons/material-rounded/KeyboardArrowLeft';
-import { MapConsumer } from 'react-leaflet';
+import { MapConsumer, Marker } from 'react-leaflet';
 
 import useGetStopsByRadius from 'hooks/useGetStopsByRadius';
 import useQueryParams from 'hooks/useQueryParams';
 
 import { H2 } from 'components/UI/Text';
 import Map from 'components/UI/Map';
+import { getLocationPin } from 'helpers/assets';
 import StopInfo from './StopInfo';
 import StopMarkers from './StopMarkers';
+
 
 const Container = styled.div(({ full }) => ({
   flex: full ? 1 : 0,
@@ -60,14 +62,16 @@ const Address = () => {
     if (mapRef.current) {
       mapRef.current.panTo(selectedStop.coords, {
         animate: true,
-        duration: 0.4,
+        duration: 1,
       });
     }
     const timeout = setTimeout(() => {
       if (mapRef.current) {
-        mapRef.current.invalidateSize({ animate: true });
+        mapRef.current.invalidateSize({
+          animate: true,
+        });
       }
-    }, 400);
+    }, 500);
     return () => clearTimeout(timeout);
   }, [selectedStop]);
 
@@ -103,6 +107,7 @@ const Address = () => {
               return null;
             }}
           </MapConsumer>
+          <Marker position={[center.lat, center.lng]} icon={getLocationPin()} />
           <StopMarkers
             stops={stops}
             onMarkerSelect={onStopSelect}
