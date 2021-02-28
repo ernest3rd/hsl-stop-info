@@ -1,6 +1,5 @@
-import { useMemo, useState } from 'react';
-import { gql, useQuery } from '@apollo/client';
-import { deduplicateByKey } from '../helpers/array';
+import { useEffect } from 'react';
+import { gql, useLazyQuery } from '@apollo/client';
 
 const GET_STOP_INFO = gql`
   query GetStopInfo($id: String!, $startTime: Long = 0, $limit: Int = 5) {
@@ -45,11 +44,24 @@ const GET_STOP_INFO = gql`
   }
 `;
 
+const LIMIT = 10;
+
 const useGetStopInfo = ({ id }) => {
-  const [startTime] = useState(parseInt(new Date().getTime() / 1000, 10));
-  const { loading, error, data: { stop } = {} } = useQuery(GET_STOP_INFO, {
-    variables: { id, startTime, limit: 10 },
-  });
+  const [queryStopInfo, { loading, error, data: { stop } = {} }] = useLazyQuery(
+    GET_STOP_INFO
+  );
+
+  useEffect(() => {
+    if (id) {
+      queryStopInfo({
+        variables: {
+          id,
+          startTime: parseInt(new Date().getTime() / 1000, 10),
+          limit: LIMIT,
+        },
+      });
+    }
+  }, [id]);
 
   return {
     loading,
