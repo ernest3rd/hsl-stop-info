@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "HSL Nearby Stops",
-    "byWho": "by Juhani Halkomäki"
+    "byWho": "App by Juhani Halkomäki",
+    "attribution": "Data sets and APIs © HSL {{year}}"
   },
   "home": {
     "searchPlaceholder": "Type an address..."

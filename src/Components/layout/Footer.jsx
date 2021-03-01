@@ -9,7 +9,11 @@ const Container = styled.footer(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  flexDirection: 'column',
   padding: spacing(6, 0),
+  '> p': {
+    margin: '0.25rem',
+  }
 }));
 
 const Footer = () => {
@@ -18,6 +22,11 @@ const Footer = () => {
   return (
     <Container className="backgroundColorized">
       <p>{t('default:app.byWho')}</p>
+      <p>
+        {t('default:app.attribution', {
+          year: new Date().getUTCFullYear(),
+        })}
+      </p>
     </Container>
   );
 };
